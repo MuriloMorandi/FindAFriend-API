@@ -1,0 +1,33 @@
+{
+  "name": "FindAFriend-API",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/http/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build",
+    "check": "biome check",
+    "format": "biome format",
+    "lint": "biome lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^11.0.1",
+    "fastify": "^5.4.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.4",
+    "biome": "^0.3.3",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "pnpm@10.11.1",
+  "engines": {
+    "node": "22.16.0"
+  }
+}

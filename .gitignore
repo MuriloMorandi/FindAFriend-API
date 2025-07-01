@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+
+# Build output
+dist/
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# Coverage
+coverage/
+
+# Misc
+*.local
+*.cache
