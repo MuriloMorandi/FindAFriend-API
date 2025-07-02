@@ -4,24 +4,31 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/http/server.ts",
+    "dev": "tsx watch --env-file .env src/http/server.ts",
     "start": "node build/server.js",
     "build": "tsup src --out-dir build",
     "check": "biome check",
     "format": "biome format",
-    "lint": "biome lint"
+    "lint": "biome lint",
+    "db:generate": "prisma generate",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:studio": "prisma studio"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@fastify/cors": "^11.0.1",
+    "@prisma/client": "6.10.1",
+    "@types/bcryptjs": "^3.0.0",
+    "bcryptjs": "^3.0.2",
     "fastify": "^5.4.0",
     "zod": "^3.25.67"
   },
   "devDependencies": {
     "@types/node": "^24.0.4",
     "biome": "^0.3.3",
+    "prisma": "^6.10.1",
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"

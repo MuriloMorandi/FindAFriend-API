@@ -23,3 +23,6 @@ coverage/
 # Misc
 *.local
 *.cache
+
+#prisma
+prisma/generated/prisma
