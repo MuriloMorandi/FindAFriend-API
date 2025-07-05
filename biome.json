@@ -30,7 +30,8 @@
             "semicolons": "always",
             "arrowParentheses": "asNeeded",
             "jsxQuoteStyle": "double",
-            "trailingCommas": "es5"
+            "trailingCommas": "es5",
+            "bracketSameLine": true
         }
     }
 }
