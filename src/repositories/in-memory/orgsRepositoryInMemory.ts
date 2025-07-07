@@ -11,6 +11,12 @@ export class OrgsRepositoryInMemory implements IOrgsRepository {
         const org: Orgs = {
             ...data,
             id: randomUUID(),
+            latitude: Prisma.Decimal(
+                data.latitude.toString()
+            ),
+            longitude: Prisma.Decimal(
+                data.longitude.toString()
+            )
         }
 
         this.items.push(org)

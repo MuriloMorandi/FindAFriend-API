@@ -1,5 +1,5 @@
-import { OrgsRepositoryPrisma } from "@/repositories/prisma/orgsRepositoryPrisma";
-import { CreateOrgsUseCase } from "@/use-cases/orgs/createOrgsUseCase";
+import { OrgAlreadyExistsError } from "@/use-cases/errors/orgAlreadyExistsError";
+import { makeCreateOrgsUseCase } from "@/use-cases/factories/makeCreateOrgsUseCase";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod/v4";
 
@@ -24,16 +24,20 @@ export const createOrgsController = async (
 
     const bodyData = createOrgsBodySchema.parse(request.body);
 
-    const orgsRepository = new OrgsRepositoryPrisma()
-
-    const orgWithSameEmail = await orgsRepository.findByEmail(bodyData.email)
-    if (orgWithSameEmail)
+    try
     {
-        return reply.status(409).send()
-    }
+        const createOrgsUseCase = makeCreateOrgsUseCase();
+        createOrgsUseCase.execute(bodyData);
 
-    const createOrgsUseCase = new CreateOrgsUseCase(orgsRepository)
-    createOrgsUseCase.execute(bodyData);
+    } catch (error)
+    {
+        if (error instanceof OrgAlreadyExistsError)
+        {
+            return reply.status(409).send(error.message);
+        }
+
+        throw error;
+    }
 
     reply.status(201).send();
 }
