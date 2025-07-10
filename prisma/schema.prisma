@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Orgs {
+  id          String @id @default(uuid())
+  name        String
+  author_name String
+  email       String @unique
+  whatsapp    String
+  password    String
+
+  cep          String
+  state        String
+  city         String
+  neighborhood String
+  street       String
+
+  latitude  Decimal
+  longitude Decimal
+
+  @@map("orgs")
+}
