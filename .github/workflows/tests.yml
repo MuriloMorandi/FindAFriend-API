@@ -40,5 +40,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Prisma Generate
+        run: db:generate
+
       - name: Run tests
         run: pnpm test
+        env:
+          DATABASE_URL: "postgresql://docker:docker@localhost:5432/api-findAFriend?schema=public"
