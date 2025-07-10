@@ -13,7 +13,7 @@ describe("Caso de Uso: Autenticação da Organizações", () => {
     sut = new AuthOrgsUseCase(orgsRepository);
   })
 
-  it("Auntenticação com sucesso", async () => {
+  it("Deve ser possivel autenticar com sucesso", async () => {
 
     await orgsRepository.create({
       email: 'teste@teste.com',
@@ -40,7 +40,7 @@ describe("Caso de Uso: Autenticação da Organizações", () => {
     ).toEqual(expect.any(String));
   });
 
-  it("Auntenticação com falha (e-mail incorreto)", async () => {
+  it("Não deve ser possivel autenticar (e-mail incorreto)", async () => {
 
     await expect(
       sut.execute({
@@ -50,7 +50,7 @@ describe("Caso de Uso: Autenticação da Organizações", () => {
     ).rejects.toBeInstanceOf(InvalidCredentialsError);
   });
 
-  it("Auntenticação com falha (senha incorreta)", async () => {
+  it("Não deve ser possivel autenticar (senha incorreta)", async () => {
 
     await orgsRepository.create({
       email: 'teste@teste.com',

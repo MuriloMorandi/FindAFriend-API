@@ -13,6 +13,30 @@ describe("Caso de Uso: Criação de Organizações", () => {
     sut = new CreateOrgsUseCase(orgsRepository);
   })
 
+  it("Deve ser possivel cadastrar uma organização", async () => {
+
+    const input = {
+      name: "Org Test",
+      author_name: "John Doe",
+      email: "john@org.com",
+      whatsapp: "123456789",
+      password: "123456",
+      cep: "12345-000",
+      state: "SP",
+      city: "São Paulo",
+      neighborhood: "Centro",
+      street: "Rua A",
+      latitude: -23.5,
+      longitude: -46.6,
+    };
+
+    const { org } = await sut.execute(input);
+
+    expect(org).toHaveProperty('id')
+    expect(org.id).toEqual(expect.any(String))
+
+  });
+
   it("Não deve ser possivel cadastrar um email existente", async () => {
 
     const input = {
@@ -64,29 +88,5 @@ describe("Caso de Uso: Criação de Organizações", () => {
     expect(isPasswordCorretlyHashed).toBe(true)
   });
 
-  it("Não deve ser possivel cadastrar um email existente", async () => {
-
-    const input = {
-      name: "Org Test",
-      author_name: "John Doe",
-      email: "john@org.com",
-      whatsapp: "123456789",
-      password: "123456",
-      cep: "12345-000",
-      state: "SP",
-      city: "São Paulo",
-      neighborhood: "Centro",
-      street: "Rua A",
-      latitude: -23.5,
-      longitude: -46.6,
-    };
-
-    await sut.execute(input);
-
-    await expect(
-      sut.execute(input)
-    ).rejects.toBeInstanceOf(OrgAlreadyExistsError)
-
-  });
 
 });
