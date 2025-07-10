@@ -14,18 +14,13 @@ jobs:
 
     services:
       postgres:
-        image: postgres:13
+        image: bitnami/postgresql
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: docker
-          POSTGRES_PASSWORD: docker
-          POSTGRES_DB: upload_test
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          POSTGRESQL_USERNAME: docker
+          POSTGRESQL_PASSWORD: docker
+          POSTGRES_DB: api-findAFriend
 
     steps:
       - name: Checkout Code
