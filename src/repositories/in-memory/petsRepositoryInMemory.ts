@@ -7,10 +7,10 @@ import { Pets, Prisma } from 'prisma/generated/prisma'
 export class PetsRepositoryInMemory implements IPetsRepository {
     public items: Pets[] = []
 
-    async create(data: Prisma.PetsCreateManyInput) {
+    async create({ id, ...data }: Prisma.PetsCreateManyInput) {
         const pet: Pets = {
             ...data,
-            id: randomUUID(),
+            id: id ?? randomUUID(),
         }
 
         this.items.push(pet)
