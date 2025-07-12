@@ -27,7 +27,7 @@ export const createOrgsController = async (
     try
     {
         const createOrgsUseCase = makeCreateOrgsUseCase();
-        createOrgsUseCase.execute(bodyData);
+        await createOrgsUseCase.execute(bodyData);
 
     } catch (error)
     {

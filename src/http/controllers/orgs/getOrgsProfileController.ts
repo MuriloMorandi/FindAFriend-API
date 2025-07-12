@@ -1,6 +1,4 @@
-import { ResourceNotFoundErrors } from '@/use-cases/errors/resourceNotFound';
-import { GetOrgsProfileUseCase } from './../../../use-cases/orgs/getOrgsProfileUseCase';
-import { InvalidCredentialsError } from "@/use-cases/errors/invalidCredentialsError";
+import { ResourceNotFoundError } from '@/use-cases/errors/resourceNotFound';
 import { makeAuthOrgsUseCase } from "@/use-cases/factories/makeAuthOrgsUseCase";
 import { makeGetOrgsProfileUseCase } from "@/use-cases/factories/makeGetProfileOrgsUseCase";
 import { FastifyReply, FastifyRequest } from "fastify";
@@ -14,17 +12,17 @@ export const getOrgsProfileController = async (
         orgId: z.string()
     });
 
-    const bodyData = getOrgsProfileBodySchema.parse(request.body);
+    const paramsData = getOrgsProfileBodySchema.parse(request.params);
 
     try
     {
         const getOrgsProfileUseCase = makeGetOrgsProfileUseCase();
-        const org = getOrgsProfileUseCase.execute(bodyData);
+        const { org } = await getOrgsProfileUseCase.execute(paramsData);
 
         reply.status(200).send(org);
     } catch (error)
     {
-        if (error instanceof ResourceNotFoundErrors)
+        if (error instanceof ResourceNotFoundError)
         {
             return reply.status(404).send(error.message);
         }
