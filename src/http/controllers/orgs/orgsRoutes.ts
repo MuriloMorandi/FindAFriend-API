@@ -6,5 +6,5 @@ import { getOrgsProfileController } from "./getOrgsProfileController";
 export const orgsRoutes = async (app: FastifyInstance) => {
     app.post('/orgs', createOrgsController);
     app.post('/orgs/auth', authOrgsController);
-    app.get('/orgs', getOrgsProfileController);
+    app.get('/orgs/:orgId', getOrgsProfileController);
 }
