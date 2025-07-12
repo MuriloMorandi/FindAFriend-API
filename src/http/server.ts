@@ -14,7 +14,7 @@ app.setErrorHandler((error, _, reply) => {
     {
         return reply.status(400).send({
             message: 'Validation error',
-            issues: error.format(),
+            issues: error.issues,
         });
     }
 
