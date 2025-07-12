@@ -17,7 +17,7 @@ export const authOrgsController = async (
     try
     {
         const authOrgsUseCase = makeAuthOrgsUseCase();
-        authOrgsUseCase.execute(bodyData);
+        await authOrgsUseCase.execute(bodyData);
 
     } catch (error)
     {
