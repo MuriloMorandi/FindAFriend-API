@@ -25,6 +25,7 @@ export class PetsRepositoryPrisma implements IPetsRepository {
                 age: data.age,
                 size: data.size,
                 energy_level: data.energy_level,
+                environment: data.environment,
                 org: {
                     city: {
                         contains: data.city,

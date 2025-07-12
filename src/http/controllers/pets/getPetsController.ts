@@ -11,12 +11,12 @@ export const getPetsController = async (
         id: z.string()
     });
 
-    const queryData = getPetsQuerySchema.parse(request.query);
+    const paramsData = getPetsQuerySchema.parse(request.params);
 
     try
     {
         const getPetsUseCase = makeGetPetsUseCase();
-        const { pet } = await getPetsUseCase.execute(queryData);
+        const { pet } = await getPetsUseCase.execute(paramsData);
 
         reply.status(200).send(pet);
     } catch (error)

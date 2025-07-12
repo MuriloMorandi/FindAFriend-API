@@ -1,29 +1,29 @@
+import { makeListPetsUseCase } from "@/use-cases/factories/makeListPetsUseCase";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod/v4";
 
-export const getPetsController = async (
+export const listPetsController = async (
     request: FastifyRequest,
     reply: FastifyReply,
 ) => {
     const getPetsQuerySchema = z.object({
-        id: z.string()
+        city: z.string(),
+        age: z.string().optional(),
+        size: z.string().optional(),
+        energy_level: z.string().optional(),
+        environment: z.string().optional()
     });
 
     const queryData = getPetsQuerySchema.parse(request.query);
 
     try
     {
-        const getPetsUseCase = makeGetPetsUseCase();
-        const { pet } = await getPetsUseCase.execute(queryData);
+        const listPetsUseCase = makeListPetsUseCase();
+        const { pets } = await listPetsUseCase.execute(queryData);
 
-        reply.status(200).send(pet);
+        reply.status(200).send(pets);
     } catch (error)
     {
-        if (error instanceof ResourceNotFoundError)
-        {
-            return reply.status(404).send(error.message);
-        }
-
         throw error;
     }
 }
