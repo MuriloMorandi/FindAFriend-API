@@ -4,7 +4,7 @@ import { Pets } from "prisma/generated/prisma";
 import { OrgNotFoundError } from "../errors/orgNotFoundError";
 
 type CreatePetsCaseRequest = {
-    idOrg: string;
+    orgId: string;
     name: string;
     about: string;
     age: string;
@@ -26,10 +26,10 @@ export class CreatePetsUseCase {
     ) { }
 
     async execute({
-        idOrg,
+        orgId,
         ...data
     }: CreatePetsCaseRequest): Promise<CreatePetsCaseResponse> {
-        const org = await this.orgsRepository.findById(idOrg)
+        const org = await this.orgsRepository.findById(orgId)
         if (!org)
         {
             throw new OrgNotFoundError()
@@ -37,7 +37,7 @@ export class CreatePetsUseCase {
 
         const pet = await this.petsRepository.create({
             ...data,
-            org_id: idOrg,
+            org_id: orgId,
         })
 
         return { pet };

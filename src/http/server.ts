@@ -3,10 +3,15 @@ import { appRoutes } from "./routes";
 import { fastifyCors } from '@fastify/cors';
 import { env } from "@/env";
 import { ZodError } from "zod/v4";
+import fastifyJwt from "@fastify/jwt";
 
 export const app = fastify();
 
 app.register(fastifyCors, { origin: '*' });
+app.register(fastifyJwt, {
+    secret: env.JWT_SECRET
+});
+
 app.register(appRoutes);
 
 app.setErrorHandler((error, _, reply) => {

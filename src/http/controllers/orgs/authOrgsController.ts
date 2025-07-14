@@ -17,8 +17,15 @@ export const authOrgsController = async (
     try
     {
         const authOrgsUseCase = makeAuthOrgsUseCase();
-        await authOrgsUseCase.execute(bodyData);
+        const { org } = await authOrgsUseCase.execute(bodyData);
 
+        const token = await reply.jwtSign({}, {
+            sign: {
+                sub: org.id
+            }
+        })
+
+        reply.status(200).send({ token });
     } catch (error)
     {
         if (error instanceof InvalidCredentialsError)
@@ -28,6 +35,4 @@ export const authOrgsController = async (
 
         throw error;
     }
-
-    reply.status(200).send();
 }
