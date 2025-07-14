@@ -1,33 +1,23 @@
 import { InvalidCredentialsError } from "@/use-cases/errors/invalidCredentialsError";
-import { makeAuthOrgsUseCase } from "@/use-cases/factories/makeAuthOrgsUseCase";
-import { FastifyReply, FastifyRequest } from "fastify";
-import { z } from "zod/v4";
+import type { FastifyReply, FastifyRequest } from "fastify";
 
-export const authOrgsController = async (
+export const RefreshOrgsController = async (
     request: FastifyRequest,
     reply: FastifyReply,
 ) => {
-    const authOrgsBodySchema = z.object({
-        email: z.string(),
-        password: z.string(),
-    });
-
-    const bodyData = authOrgsBodySchema.parse(request.body);
+    await request.jwtVerify({ onlyCookie: true });
 
     try
     {
-        const authOrgsUseCase = makeAuthOrgsUseCase();
-        const { org } = await authOrgsUseCase.execute(bodyData);
-
         const token = await reply.jwtSign({}, {
             sign: {
-                sub: org.id
+                sub: request.user.sub
             }
         })
 
         const refreshToken = await reply.jwtSign({}, {
             sign: {
-                sub: org.id,
+                sub: request.user.sub,
                 expiresIn: '7d'
             }
         })

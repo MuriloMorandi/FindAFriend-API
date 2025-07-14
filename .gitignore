@@ -4,7 +4,6 @@ pnpm-debug.log*
 
 # Environment variables
 .env
-.env.*
 
 # Logs
 logs/

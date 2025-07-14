@@ -7,8 +7,9 @@ export const createPetsController = async (
     request: FastifyRequest,
     reply: FastifyReply,
 ) => {
+    const orgId = request.user.sub;
+
     const createOrgsBodySchema = z.object({
-        idOrg: z.string(),
         name: z.string(),
         about: z.string(),
         age: z.string(),
@@ -22,7 +23,10 @@ export const createPetsController = async (
     try
     {
         const createOrgsUseCase = makeCreatePetsUseCase();
-        await createOrgsUseCase.execute(bodyData);
+        await createOrgsUseCase.execute({
+            ...bodyData,
+            orgId
+        });
 
     } catch (error)
     {
