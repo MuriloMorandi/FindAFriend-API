@@ -1,0 +1,39 @@
+name: Tests e2e
+
+on:
+  pull_request:
+    branches:
+      - master
+    types: [opened, reopened, labeled, unlabeled, synchronize]
+
+  workflow_dispatch:
+
+jobs:
+  run-ci:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: bitnami/postgresql
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_USER: docker
+          POSTGRES_PASSWORD: docker
+          POSTGRES_DB: api-findAFriend
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node and PNPM
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Prisma Generate
+        run: pnpm db:generate
+
+      - name: Run tests
+        run: pnpm test:e2e
+        env:
+          JWT_SECRET: testing
+          DATABASE_URL: "postgresql://docker:docker@localhost:5432/api-findAFriend?schema=public"

@@ -1,4 +1,4 @@
-name: Setup Node ande PNPM
+name: Setup Node and PNPM
 description: Setup node and pnpm
 runs:
   using: "composite"
