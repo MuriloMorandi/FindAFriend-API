@@ -1,4 +1,4 @@
-name: Tests
+name: Tests unit
 
 on:
   pull_request:
@@ -44,6 +44,4 @@ jobs:
         run: pnpm db:generate
 
       - name: Run tests
-        run: pnpm test
-        env:
-          DATABASE_URL: "postgresql://docker:docker@localhost:5432/api-findAFriend?schema=public"
+        run: pnpm test:unit

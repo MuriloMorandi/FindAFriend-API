@@ -5,6 +5,9 @@ export const statusRoutes = async (app: FastifyInstance) => {
         request: FastifyRequest,
         reply: FastifyReply,
     ) => {
-        reply.status(200).send("API :ok");
+        
+        reply.status(200).send({
+            api: 'OK'
+        });
     });
 }

@@ -5,7 +5,7 @@ import { OrgsRepositoryInMemory } from '@/repositories/in-memory/orgsRepositoryI
 import { OrgNotFoundError } from '../errors/orgNotFoundError';
 import { makeOrg } from '../factories/makeOrg.factory';
 
-describe("Caso de Uso: Criação de Pets", () => {
+describe('Caso de Uso: Criação de Pets', () => {
   let orgsRepository: OrgsRepositoryInMemory;
   let petsRepository: PetsRepositoryInMemory;
   let sut: CreatePetsUseCase;
@@ -14,9 +14,9 @@ describe("Caso de Uso: Criação de Pets", () => {
     orgsRepository = new OrgsRepositoryInMemory();
     petsRepository = new PetsRepositoryInMemory(orgsRepository);
     sut = new CreatePetsUseCase(petsRepository, orgsRepository);
-  })
+  });
 
-  it("Deve ser possivel cadastrar um Pet", async () => {
+  it('Deve ser possivel cadastrar um Pet', async () => {
     const org = await orgsRepository.create(makeOrg());
 
     const { pet } = await sut.execute({
@@ -26,16 +26,14 @@ describe("Caso de Uso: Criação de Pets", () => {
       size: 'Grande',
       energy_level: '2',
       environment: 'asdf',
-      orgId: org.id
+      orgId: org.id,
     });
 
-    expect(pet).toHaveProperty('id')
-    expect(pet.id).toEqual(expect.any(String))
-
+    expect(pet).toHaveProperty('id');
+    expect(pet.id).toEqual(expect.any(String));
   });
 
-  it("Não deve ser possivel cadastrar um Pet para uma organização inexistente", async () => {
-
+  it('Não deve ser possivel cadastrar um Pet para uma organização inexistente', async () => {
     await expect(
       sut.execute({
         name: 'Alfredo',
@@ -48,5 +46,4 @@ describe("Caso de Uso: Criação de Pets", () => {
       })
     ).rejects.instanceOf(OrgNotFoundError);
   });
-
 });
