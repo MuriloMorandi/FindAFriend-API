@@ -1,41 +1,25 @@
 name: Tests unit
 
-on:
-  pull_request:
-    branches:
-      - master
-    types: [opened, reopened, labeled, unlabeled, synchronize]
-
-  workflow_dispatch:
+on: [push]
 
 jobs:
   run-ci:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: bitnami/postgresql
-        ports:
-          - 5432:5432
-        env:
-          POSTGRESQL_USERNAME: docker
-          POSTGRESQL_PASSWORD: docker
-          POSTGRES_DB: api-findAFriend
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install Node.js
+      - name: Setup Node.js and pnpm
         uses: actions/setup-node@v4
         with:
           node-version: 22.16.0
+          cache: "pnpm"
 
-      - name: Install pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10.11.1
-          run_install: false
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
